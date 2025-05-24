@@ -1,4 +1,4 @@
-# FASTPASS: Smart Campus Occupancy and Noise-Level Monitoring System
+# FASTPASS: IoT Real-Time Study Space Availability System 
 
 **Senior Design Project — Spring 2025**
 **University of Miami | Department of Electrical and Computer Engineering**
@@ -13,7 +13,7 @@
 
 ## Project Overview
 
-**FASTPASS** is a real-time smart campus system that empowers students and faculty to locate quiet, available study spaces across university libraries and shared study areas. This system integrates LiDAR, microphone, and Wi-Fi sniffing technologies to detect occupancy and ambient noise levels, providing live data through a web-based dashboard.
+**FASTPASS** is a real-time smart campus system that empowers students and faculty to locate quiet, available study spaces within the Richter Library and other shared study areas. This system integrates LiDAR, microphone, and Wi-Fi sniffing technologies to detect occupancy and ambient noise levels, providing live data through a web-based dashboard.
 
 Developed as a capstone project by a multidisciplinary team of engineers at the University of Miami, FASTPASS addresses a common academic challenge: the time-consuming and inefficient process of finding suitable study spaces during peak hours. The system delivers scalable, privacy-conscious, and real-time insights that improve productivity and student satisfaction. Because my role in this project was strictly related to all hardware and firmware design and development, this repository will largely highlight these areas.
 
