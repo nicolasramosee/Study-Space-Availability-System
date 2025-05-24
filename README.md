@@ -9,7 +9,7 @@
 * **Nicolas Ramos** – Electrical Engineer
 * **Bana Zoumot** – Computer Engineer
 * **Jenna Viard** – Software Engineer
-  **Advisor:** Dr. Nigel John
+*  **Advisor:** Dr. Nigel John
 
 ---
 
