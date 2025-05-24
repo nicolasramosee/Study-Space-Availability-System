@@ -2,6 +2,8 @@
 
 **Senior Design Project — Spring 2025**
 **University of Miami | Department of Electrical and Computer Engineering**
+---
+
 **Team Members:**
 
 * **Nicolas Ramos** – Electrical Engineer
