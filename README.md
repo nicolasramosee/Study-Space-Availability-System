@@ -76,11 +76,11 @@ The system consists of:
 
 ---
 
-## 📁 Repository Contents
+## Repository Contents
 
 * `/hardware/` — Wiring diagrams, sensor modules, 3D enclosure models
 * `/firmware/` — ESP32 Arduino code for LiDAR, microphone, Wi-Fi sniffing
-* `/docs/` — Final Report, user testing summaries, UI mockups
+* `/docs/` — Final Report
 
 ---
 
