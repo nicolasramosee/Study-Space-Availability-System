@@ -70,7 +70,7 @@ The system consists of:
 
 ## Outcomes
 
-* Demonstrated the feasibility of low-cost, privacy-conscious smart campus infrastructure.
+* Demonstrated the feasibility of privacy-conscious smart campus infrastructure.
 * Provided real-world engineering experience across embedded systems, IoT, cloud development, and human-centered design.
 * Recognized for aligning with UN Sustainable Development Goals (SDG 4 and SDG 9).
 
