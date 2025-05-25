@@ -56,6 +56,6 @@ Refer to the `/hardware/` folder for wiring diagrams and 3D models.
 
 ---
 
-Developed as part of the **FASTPASS Senior Design Project** at the University of Miami by  
-**Nicolas Ramos, Bana Zoumot, and Jenna Viard**  
-Advised by **Dr. Nigel John**
+Developed as part of the **FASTPASS Senior Design Project** at the University of Miami. Designed and tested by:  
+**Nicolas Ramos** – Electrical Engineer  
+University of Miami | Spring 2025
