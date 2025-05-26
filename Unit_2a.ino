@@ -45,7 +45,8 @@ static unsigned long lastChannelHop  = 0;
 static int           currentChannel = 1;
 
 // forward declarations
-typedef struct {
+typedef struct 
+{
   uint16_t frame_ctrl; uint16_t duration_id;
   uint8_t addr1[6]; uint8_t addr2[6]; uint8_t addr3[6]; uint16_t seq_ctrl;
 } hdr_t;
@@ -60,7 +61,8 @@ void sendToFirebaseM(float averageDb);
 void i2s_install();
 void i2s_setpin();
 
-void setup() {
+void setup() 
+{
   Serial.begin(115200);
   delay(200);
   // Mic init
@@ -81,11 +83,13 @@ void setup() {
   xTaskCreatePinnedToCore(firebaseTask,    "HTTP", 8192, nullptr, 1, nullptr, 1);
 }
 
-void loop() {
+void loop() 
+{
   vTaskDelay(portMAX_DELAY);
 }
 
-void sniffer_callback(void* buf, wifi_promiscuous_pkt_type_t type) {
+void sniffer_callback(void* buf, wifi_promiscuous_pkt_type_t type) 
+{
   if (type!=WIFI_PKT_MGMT && type!=WIFI_PKT_DATA) return;
   auto* pkt=(wifi_promiscuous_pkt_t*)buf;
   if(!pkt||!pkt->payload) return;
@@ -97,20 +101,25 @@ void sniffer_callback(void* buf, wifi_promiscuous_pkt_type_t type) {
   macLastSeen[String(mac)] = millis();
 }
 
-void wifiSnifferTask(void* pv) {
+void wifiSnifferTask(void* pv) 
+{
   (void)pv;
-  for(;;) {
+  for(;;) 
+  {
     unsigned long now=millis();
     // hop channel
-    if(now-lastChannelHop>=CHANNEL_HOP_INTERVAL_MS) {
+    if(now-lastChannelHop>=CHANNEL_HOP_INTERVAL_MS) 
+    {
       currentChannel=(currentChannel%WIFI_CHANNEL_MAX)+1;
       esp_wifi_set_channel(currentChannel,WIFI_SECOND_CHAN_NONE);
       lastChannelHop=now;
     }
     // report
-    if(now-lastSniffReport>=REPORT_INTERVAL_MS) {
+    if(now-lastSniffReport>=REPORT_INTERVAL_MS) 
+    {
       // expire old
-      for(auto it=macLastSeen.begin();it!=macLastSeen.end();) {
+      for(auto it=macLastSeen.begin();it!=macLastSeen.end();) 
+      {
         if(now-it->second>REPORT_INTERVAL_MS) it=macLastSeen.erase(it);
         else ++it;
       }
@@ -122,13 +131,16 @@ void wifiSnifferTask(void* pv) {
   }
 }
 
-void audioTask(void* pv) {
+void audioTask(void* pv) 
+{
   (void)pv;
   unsigned long startTs=0;
   float dbSum=0;int dbCnt=0;
-  for(;;) {
+  for(;;) 
+  {
     size_t br;
-    if(i2s_read(I2S_PORT,sBuffer,sizeof(sBuffer),&br,portMAX_DELAY)==ESP_OK&&br) {
+    if(i2s_read(I2S_PORT,sBuffer,sizeof(sBuffer),&br,portMAX_DELAY)==ESP_OK&&br) 
+    {
       for(int i=0;i<SAMPLES;++i){vReal[i]=sBuffer[i];vImag[i]=0;}
       FFT.windowing(vReal,SAMPLES,FFT_WIN_TYP_HAMMING,FFT_FORWARD);
       FFT.compute(vReal,vImag,SAMPLES,FFT_FORWARD);
@@ -139,10 +151,12 @@ void audioTask(void* pv) {
       for(int i=sb;i<eb&&i<SAMPLES/2;++i){sum+=vReal[i]*vReal[i];++cnt;}
       float rms=cnt?sqrt(sum/cnt):0;
       float db=20*log10(rms+1);
-      if(rms>RMS_THRESHOLD) {
+      if(rms>RMS_THRESHOLD) 
+      {
         if(!startTs) startTs=millis();
         dbSum+=db;dbCnt++;
-        if(millis()-startTs>=AUDIO_WINDOW_MS){
+        if(millis()-startTs>=AUDIO_WINDOW_MS)
+        {
           micAvg=dbCnt?dbSum/dbCnt:0;
           dbSum=0;dbCnt=0;startTs=millis();
           readyMic=true;
@@ -153,14 +167,17 @@ void audioTask(void* pv) {
   }
 }
 
-void firebaseTask(void* pv) {
+void firebaseTask(void* pv) 
+{
   (void)pv;
   for(;;) {
-    if(readySniff) {
+    if(readySniff) 
+    {
       esp_wifi_set_promiscuous(false);
       connectToWiFi();
       WiFiClientSecure c; c.setInsecure();
-      if(c.connect(host,443)){
+      if(c.connect(host,443))
+      {
         String url=String("/2a/WiFi_Sniffing.json?auth=")+firebaseSecret;
         String pld=String(sniffCount);
         c.printf("PUT %s HTTP/1.1\r\nHost: %s\r\nContent-Type: text/plain\r\nContent-Length: %d\r\n\r\n%s",
@@ -173,7 +190,8 @@ void firebaseTask(void* pv) {
       esp_wifi_set_channel(currentChannel,WIFI_SECOND_CHAN_NONE);
       readySniff=false;
     }
-    if(readyMic) {
+    if(readyMic) 
+    {
       connectToWiFi();
       WiFiClientSecure c; c.setInsecure();
       if(c.connect(host,443)){
@@ -190,15 +208,18 @@ void firebaseTask(void* pv) {
   }
 }
 
-void connectToWiFi() {
-  if(WiFi.status()!=WL_CONNECTED) {
+void connectToWiFi() 
+{
+  if(WiFi.status()!=WL_CONNECTED) 
+  {
     WiFi.begin(ssid);
     unsigned long st=millis();
     while(WiFi.status()!=WL_CONNECTED && millis()-st<10000) vTaskDelay(pdMS_TO_TICKS(200));
   }
 }
 
-void i2s_install(){
+void i2s_install()
+{
   i2s_config_t cfg={
     .mode=(i2s_mode_t)(I2S_MODE_MASTER|I2S_MODE_RX),
     .sample_rate=SAMPLING_FREQUENCY,
@@ -212,7 +233,8 @@ void i2s_install(){
   };
   i2s_driver_install(I2S_PORT,&cfg,0,nullptr);
 }
-void i2s_setpin(){
+void i2s_setpin()
+{
   i2s_pin_config_t p={
     .bck_io_num=I2S_SCK,.ws_io_num=I2S_WS,
     .data_out_num=-1,.data_in_num=I2S_SD
