@@ -89,5 +89,4 @@ The system consists of:
 ## Contact
 Feel free to connect or reach out if you’d like to collaborate or ask questions!
 - Email: nmree25@gmail.com
-- Mobile: (786) 380-1981
 - LinkedIn: www.linkedin.com/in/nicolas-ramos-503056344
